@@ -18,6 +18,5 @@ public class Timer {
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
-    private void scheduleAtFixedRate(TimerTask repeatedTask, long delay, long period) {
-    }
+
 }
