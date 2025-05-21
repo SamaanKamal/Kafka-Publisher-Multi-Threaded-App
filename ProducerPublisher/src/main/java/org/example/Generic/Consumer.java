@@ -1,4 +1,4 @@
-package org.example.DatabaseConnection;
+package org.example.Generic;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

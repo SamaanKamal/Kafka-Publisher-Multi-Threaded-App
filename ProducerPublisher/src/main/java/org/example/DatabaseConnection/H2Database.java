@@ -17,7 +17,7 @@ public class H2Database {
             connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
 
             Statement stmt = connection.createStatement();
-            stmt.execute("CREATE TABLE users(id INT PRIMARY KEY, name VARCHAR(255)), age int");
+            stmt.execute("CREATE TABLE users(id INT PRIMARY KEY, name VARCHAR(255),  age int)");
             stmt.execute("INSERT INTO users VALUES(1, 'Alice', 45), (2, 'Bob', 30)");
         } catch (Exception e) {
             e.printStackTrace();
