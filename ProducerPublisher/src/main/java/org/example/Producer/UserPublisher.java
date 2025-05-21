@@ -14,7 +14,7 @@ public class UserPublisher {
 
     private static final AtomicInteger idGenerator = new AtomicInteger(100); // Starting ID
 
-    public static void main(String[] args) {
+    public void start() {
         Timer timer = new Timer();
 
         TimerTask task = new TimerTask() {
