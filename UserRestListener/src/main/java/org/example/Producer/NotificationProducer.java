@@ -10,7 +10,7 @@ public class NotificationProducer {
     private final GenericProducer<String, String> producer;
 
     public NotificationProducer() {
-        this.producer = new GenericProducer<>("src/main/resources/kafka-producer-config.properties");
+        this.producer = new GenericProducer<>("src/main/resources/kafka-config.properties");
 
     }
 

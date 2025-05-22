@@ -1,5 +1,7 @@
 package org.example.DatabaseConnection;
 
+import org.h2.tools.Server;
+
 import java.sql.*;
 
 public class H2Database {
@@ -10,6 +12,7 @@ public class H2Database {
 
     static {
         try {
+            //Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
             // Load driver (optional for JDBC 4+)
             Class.forName("org.h2.Driver");
 

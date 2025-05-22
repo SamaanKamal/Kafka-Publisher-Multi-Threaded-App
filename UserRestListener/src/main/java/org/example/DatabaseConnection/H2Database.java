@@ -1,7 +1,5 @@
 package org.example.DatabaseConnection;
 
-import org.h2.tools.Server;
-
 import java.sql.*;
 
 public class H2Database {
@@ -12,12 +10,11 @@ public class H2Database {
 
     static {
         try {
-            Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
             // Load driver (optional for JDBC 4+)
             Class.forName("org.h2.Driver");
 
             // Create connection
-            connection = DriverManager.getConnection(JDBC_URL+"DB_CLOSE_DELAY=-1", USER, PASSWORD);
+            connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
 
             Statement stmt = connection.createStatement();
             stmt.execute("CREATE TABLE users(id INT PRIMARY KEY, name VARCHAR(255),  age int)");

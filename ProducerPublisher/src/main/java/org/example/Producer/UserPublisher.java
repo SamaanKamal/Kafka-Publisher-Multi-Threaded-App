@@ -11,8 +11,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UserPublisher {
     private static final long DELAY = 0; // No initial delay
     private static final long PERIOD = 2 * 60 * 1000; // 2 minutes in milliseconds
+    private final GenericProducer<String, String> producer;
 
     private static final AtomicInteger idGenerator = new AtomicInteger(100); // Starting ID
+
+    public UserPublisher() {
+        this.producer = new GenericProducer<>("src/main/resources/kafka-config.properties");
+    }
 
     public void start() {
         Timer timer = new Timer();
@@ -26,11 +31,10 @@ public class UserPublisher {
                 user.setAge((int) (Math.random() * 60 + 18)); // Random age between 18–78
 
                 // Save to H2 database
-                DatabaseCRUD crud = new DatabaseCRUD();
-                crud.save(user);
+//                DatabaseCRUD crud = new DatabaseCRUD();
+//                crud.save(user);
 
                 // Send to Kafka
-                GenericProducer<String, String> producer = new GenericProducer<>("src/main/resources/kafka-config.properties");
                 try  {
                     String json = JSONUtil.toJson(user);
                     producer.send("users", String.valueOf(user.getId()), json);

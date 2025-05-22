@@ -1,10 +1,13 @@
 package org.example.Service;
 
 import org.example.DatabaseConnection.DatabaseCRUD;
+import org.example.Entity.Notification;
 import org.example.Entity.User;
 import org.example.Producer.GenericProducer;
 import org.example.Producer.NotificationProducer;
 import org.example.Util.JSONUtil;
+
+import java.sql.Timestamp;
 
 public class UserService {
     private final DatabaseCRUD db;
@@ -23,7 +26,7 @@ public class UserService {
     }
 
     public void sendUserToKafka(User user) {
-        GenericProducer<String, String> producer = new GenericProducer<>("src/main/resources/kafka-consumer-config.properties");
+        GenericProducer<String, String> producer = new GenericProducer<>("src/main/resources/kafka-config.properties");
         try {
             String json = JSONUtil.toJson(user);
             producer.send("users", String.valueOf(user.getId()), json);

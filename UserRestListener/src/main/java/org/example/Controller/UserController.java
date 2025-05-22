@@ -32,7 +32,8 @@ public class UserController implements HttpHandler {
             User user = JSONUtil.fromJson(requestBody, User.class);
 
             // Delegate user creation and notification handling to UserService
-            userService.handleUserCreation(user);
+            // userService.handleUserCreation(user);
+            userService.sendUserToKafka(user);
 
             String response = "✅ User and notification saved and published.";
             exchange.sendResponseHeaders(200, response.length());
