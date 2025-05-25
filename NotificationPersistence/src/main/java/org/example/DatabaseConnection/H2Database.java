@@ -18,12 +18,20 @@ public class H2Database {
 
             Statement stmt = connection.createStatement();
             stmt.execute("CREATE TABLE users(id INT PRIMARY KEY, name VARCHAR(255),  age int)");
+            stmt.execute("CREATE TABLE notifications(id INT PRIMARY KEY AUTO_INCREMENT, user_id int,  message VARCHAR(255), timestamp timestamp, CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id))");
             stmt.execute("INSERT INTO users VALUES(1, 'Alice', 45), (2, 'Bob', 30)");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public static PreparedStatement prepare(String sql) throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            throw new SQLException("Database connection is not available.");
+        }
+        return connection.prepareStatement(sql);
+    }
+
+    public static PreparedStatement prepare(String sql, int returnGeneratedKeys) throws SQLException {
         if (connection == null || connection.isClosed()) {
             throw new SQLException("Database connection is not available.");
         }

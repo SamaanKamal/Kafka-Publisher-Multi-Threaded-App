@@ -3,7 +3,6 @@ package org.example.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.example.Producer.GenericProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import java.util.function.Consumer;
 
 public class GenericConsumer<K, V> {
     private final KafkaConsumer<K, V> consumer;
-    private static final Logger logger = LoggerFactory.getLogger(GenericProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(GenericConsumer.class);
 
 
     public GenericConsumer(String configFile) {

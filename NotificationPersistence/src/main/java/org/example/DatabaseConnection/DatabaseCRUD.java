@@ -6,6 +6,7 @@ import org.example.Entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,15 +100,35 @@ public class DatabaseCRUD {
         }
     }
 
-    public void saveNotification(Notification n) {
+//    public void saveNotification(Notification n) {
+//        String sql = "INSERT INTO notifications (user_id, message, timestamp) VALUES (?, ?, ?)";
+//        try (PreparedStatement ps = H2Database.prepare(sql)) {
+//            ps.setInt(1, n.getUserId());
+//            ps.setString(2, n.getMessage());
+//            ps.setTimestamp(3, n.getTimestamp());
+//            ps.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    public int saveNotification(Notification n) {
         String sql = "INSERT INTO notifications (user_id, message, timestamp) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = H2Database.prepare(sql)) {
+        try (PreparedStatement ps = H2Database.prepare(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, n.getUserId());
             ps.setString(2, n.getMessage());
             ps.setTimestamp(3, n.getTimestamp());
             ps.executeUpdate();
+
+            // Retrieve generated ID
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Return the generated notification ID
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return -1; // Return -1 or throw exception if insertion fails
     }
+
 }
