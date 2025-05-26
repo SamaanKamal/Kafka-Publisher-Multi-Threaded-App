@@ -4,6 +4,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.example.Entity.Notification;
 import org.example.Service.NotificationService;
 import org.example.Util.JSONUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -13,11 +15,13 @@ import java.util.TimerTask;
 public class NotificationConsumer {
     private final GenericConsumer<String, String> consumer;
     private final NotificationService notificationService;
+    private static final Logger logger = LoggerFactory.getLogger(NotificationConsumer.class);
+
 
     private static final long PERIOD = 2 * 60 * 1000; // 2 minutes
 
     public NotificationConsumer() {
-        this.consumer = new GenericConsumer<>("src/main/resources/kafka-consumer-config.properties");
+        this.consumer = new GenericConsumer<>("kafka-consumer-config.properties");
         notificationService = new NotificationService();
     }
 
@@ -36,7 +40,7 @@ public class NotificationConsumer {
                                 Notification notification = JSONUtil.fromJson(record.value(), Notification.class);
                                 int notificationId = notificationService.handleNotificationSaving(notification);
                                 System.out.println("Consumed notification with id : " + notificationId + " for user: " + notification.getUserId() + " with message: " + notification.getMessage());
-
+                                logger.info("Consumed notification with id : " + notificationId + " for user: " + notification.getUserId() + " with message: " + notification.getMessage());
 
                                 // Trigger notification
                             } catch (Exception e) {

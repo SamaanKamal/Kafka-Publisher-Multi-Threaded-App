@@ -2,6 +2,8 @@ package org.example.DatabaseConnection;
 
 import org.example.Entity.Notification;
 import org.example.Entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +15,8 @@ import java.util.List;
 import static org.example.DatabaseConnection.H2Database.connection;
 
 public class DatabaseCRUD {
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseCRUD.class);
+
     public void save(User user) {
         String sql = "MERGE INTO users (id, name, age) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = H2Database.prepare(sql)) {
@@ -112,12 +116,16 @@ public class DatabaseCRUD {
 //        }
 //    }
     public int saveNotification(Notification n) {
-        String sql = "INSERT INTO notifications (user_id, message, timestamp) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO notifications (id, user_id, message, timestamp) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = H2Database.prepare(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, n.getUserId());
-            ps.setString(2, n.getMessage());
-            ps.setTimestamp(3, n.getTimestamp());
+            ps.setInt(1,n.getId());
+            ps.setInt(2, n.getUserId());
+            ps.setString(3, n.getMessage());
+            ps.setTimestamp(4, n.getTimestamp());
             ps.executeUpdate();
+            System.out.println("dog");
+            logger.info("dog in database crud");
+
 
             // Retrieve generated ID
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -128,7 +136,9 @@ public class DatabaseCRUD {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return -1; // Return -1 or throw exception if insertion fails
+        System.out.println("cat");
+
+        return n.getId() >= 1 ? n.getId(): -1; // Return -1 or throw exception if insertion fails
     }
 
 }

@@ -6,6 +6,8 @@ import org.example.Entity.User;
 import org.example.Producer.NotificationProducer;
 import org.example.Service.UserService;
 import org.example.Util.JSONUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -17,16 +19,19 @@ public class UserConsumer {
     private final GenericConsumer<String, String> consumer;
     private final NotificationProducer notificationProducer;
     private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(UserConsumer.class);
+
 
     private static final long PERIOD = 2 * 60 * 1000; // 2 minutes
 
     public UserConsumer() {
-        this.consumer = new GenericConsumer<>("src/main/resources/kafka-consumer-config.properties");
+        this.consumer = new GenericConsumer<>("kafka-consumer-config.properties");
         this.notificationProducer = new NotificationProducer();
         userService = new UserService();
     }
 
     public void startConsuming() {
+        logger.info("consume from here");
         Timer timer = new Timer();
 
         TimerTask task = new TimerTask() {
@@ -40,6 +45,7 @@ public class UserConsumer {
                             try {
                                 User user = JSONUtil.fromJson(record.value(), User.class);
                                 System.out.println("Consumed user: " + user.getName());
+                                logger.info("Consumed user: " + user.getName());
                                 userService.handleUserCreation(user);
 
                                 // Trigger notification

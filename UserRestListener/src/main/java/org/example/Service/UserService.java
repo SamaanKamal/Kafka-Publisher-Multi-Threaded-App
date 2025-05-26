@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public void sendUserToKafka(User user) {
-        GenericProducer<String, String> producer = new GenericProducer<>("src/main/resources/kafka-config.properties");
+        GenericProducer<String, String> producer = new GenericProducer<>("kafka-config.properties");
         try {
             String json = JSONUtil.toJson(user);
             producer.send("users", String.valueOf(user.getId()), json);

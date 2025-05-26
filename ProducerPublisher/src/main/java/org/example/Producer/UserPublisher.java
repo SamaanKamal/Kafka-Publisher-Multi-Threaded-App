@@ -3,12 +3,15 @@ package org.example.Producer;
 import org.example.DatabaseConnection.DatabaseCRUD;
 import org.example.Entity.User;
 import org.example.Util.JSONUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserPublisher {
+    private static final Logger logger = LoggerFactory.getLogger(UserPublisher.class);
     private static final long DELAY = 0; // No initial delay
     private static final long PERIOD = 2 * 60 * 1000; // 2 minutes in milliseconds
     private final GenericProducer<String, String> producer;
@@ -16,7 +19,7 @@ public class UserPublisher {
     private static final AtomicInteger idGenerator = new AtomicInteger(100); // Starting ID
 
     public UserPublisher() {
-        this.producer = new GenericProducer<>("src/main/resources/kafka-config.properties");
+        this.producer = new GenericProducer<>("kafka-config.properties");
     }
 
     public void start() {
@@ -44,6 +47,7 @@ public class UserPublisher {
                 }
 
                 System.out.println("Published user: " + user.getName());
+                logger.info("Published user: " + user.getName());
             }
         };
 

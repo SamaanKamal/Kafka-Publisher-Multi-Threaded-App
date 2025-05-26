@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -54,7 +56,12 @@ public class GenericProducer<K,V> {
     private static Properties loadProperties(String configFile) {
         System.out.println(configFile);
         Properties userProps = new Properties();
-        try (FileInputStream in = new FileInputStream(configFile)) {
+//        try (FileInputStream in = new FileInputStream(configFile)) {
+//            userProps.load(in);
+        try (InputStream in = GenericProducer.class.getClassLoader().getResourceAsStream(configFile)) {
+            if (in == null) {
+                throw new FileNotFoundException("Config file not found in classpath: " + configFile);
+            }
             userProps.load(in);
         } catch (IOException e) {
             logger.error("Failed to load Kafka producer config", e);

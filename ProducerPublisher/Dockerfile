@@ -7,6 +7,6 @@ RUN mvn -f /usr/app/pom.xml clean package
 
 FROM openjdk:17-alpine
 
-COPY --from=builder /usr/app/target/*.jar /usr/app/app.jar
+COPY --from=builder /usr/app/target/app.jar /usr/app/app.jar
 
 ENTRYPOINT ["java", "-jar", "/usr/app/app.jar"]
