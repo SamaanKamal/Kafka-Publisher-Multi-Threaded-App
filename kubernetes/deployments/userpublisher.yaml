@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userpublisher
+  labels:
+    app: userpublisher
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: userpublisher
+  template:
+    metadata:
+      labels:
+        app: userpublisher
+    spec:
+      containers:
+      - name: userpublisher
+        image: samaan7/kafka-microservice:1.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          value: "broker:29092"

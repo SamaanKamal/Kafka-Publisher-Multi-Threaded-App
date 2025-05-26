@@ -1,4 +1,4 @@
-FROM maven:3.8-openjdk-17 as builder
+FROM maven:3.8-openjdk-17 AS builder
 
 COPY src /usr/app/src
 COPY pom.xml /usr/app
