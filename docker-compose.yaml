@@ -68,5 +68,5 @@ services:
     environment:
       #SPRING_PROFILES_ACTIVE: 'production'
       DEVTIRO_KAFKA_TOPIC: 'notifications'
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: 'broker:29092'
+      KAFKA_BOOTSTRAP_SERVERS: 'broker:29092'
   
