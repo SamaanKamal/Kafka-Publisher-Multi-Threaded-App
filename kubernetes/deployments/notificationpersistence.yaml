@@ -5,7 +5,7 @@ metadata:
   labels:
     app: notificationpersistence
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: notificationpersistence
@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: notificationpersistence
-        image: samaan7/kafka-microservice:1.0
+        image: samaan7/kafka-microservice:5.4
         ports:
         - containerPort: 8080
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: "broker:29092"
+          value: "broker:9092"

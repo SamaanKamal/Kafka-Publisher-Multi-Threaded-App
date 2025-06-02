@@ -41,6 +41,7 @@ public class UserPublisher {
                 try  {
                     String json = JSONUtil.toJson(user);
                     producer.send("users", String.valueOf(user.getId()), json);
+                    logger.info("json" + json.toString());
                 } catch (Exception e) {
                     System.err.println("Kafka publish failed: " + e.getMessage());
                     e.printStackTrace();

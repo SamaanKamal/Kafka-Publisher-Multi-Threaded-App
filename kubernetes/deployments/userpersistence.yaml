@@ -5,7 +5,7 @@ metadata:
   labels:
     app: userpersistence
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: userpersistence
@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: userpersistence
-        image: samaan7/kafka-microservice:1.0
+        image: samaan7/kafka-microservice:3.3
         ports:
         - containerPort: 8080
         env:
         - name: KAFKA_BOOTSTRAP_SERVERS
-          value: "broker:29092"
+          value: "broker:9092"

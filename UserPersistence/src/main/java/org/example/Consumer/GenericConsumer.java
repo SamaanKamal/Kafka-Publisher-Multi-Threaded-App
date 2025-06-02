@@ -49,6 +49,8 @@ public class GenericConsumer<K, V> {
         consumer.subscribe(topics);
         logger.info("topics 2 ");
         ConsumerRecords<K, V> records = consumer.poll(duration);
+        logger.info("records count: " + records.count());
+        logger.info("DADADSADs");
         logger.info("topics3");
         logger.info("samaan Record: " +(records.toString()));
         for (ConsumerRecord<K, V> record : records) {
